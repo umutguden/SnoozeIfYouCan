@@ -274,7 +274,7 @@ Thank you to:
 
 **Maintainer**: HMD Developments  
 **Email**: contact@hmddevs.org
-**GitHub**: [@ichbinheimdall](https://github.com/ichbinheimdall)
+**GitHub**: [@umutguden](https://github.com/umutguden)
 
 ---
 
