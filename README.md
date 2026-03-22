@@ -116,7 +116,7 @@ SnoozeIfYouCan/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ichbinheimdall/SnoozeIfYouCan.git
+   git clone https://github.com/umutguden/SnoozeIfYouCan.git
    cd SnoozeIfYouCan
    ```
 
@@ -225,7 +225,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📧 Contact
 
 **HMD Developments**
-- GitHub: [@ichbinheimdall](https://github.com/ichbinheimdall)
+- GitHub: [@umutguden](https://github.com/umutguden)
 - Email: contact@hmddevs.org
 
 ## ⚠️ Disclaimer
