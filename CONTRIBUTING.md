@@ -53,7 +53,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 1. Clone your fork of the repository
    ```bash
-   git clone https://github.com/ichbinheimdall/SnoozeIfYouCan.git
+   git clone https://github.com/umutguden/SnoozeIfYouCan.git
    cd SnoozeIfYouCan
    ```
 
