@@ -315,9 +315,9 @@ Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🔗 Links
 
-- [Report Bug](https://github.com/ichbinheimdall/SnoozeIfYouCan/issues/new?template=bug_report.md)
-- [Request Feature](https://github.com/ichbinheimdall/SnoozeIfYouCan/issues/new?template=feature_request.md)
-- [Discussions](https://github.com/ichbinheimdall/SnoozeIfYouCan/discussions)
+- [Report Bug](https://github.com/umutguden/SnoozeIfYouCan/issues/new?template=bug_report.md)
+- [Request Feature](https://github.com/umutguden/SnoozeIfYouCan/issues/new?template=feature_request.md)
+- [Discussions](https://github.com/umutguden/SnoozeIfYouCan/discussions)
 ```
 
 ## First Commits
