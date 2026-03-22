@@ -214,7 +214,7 @@ Before releasing to production:
 
 For security concerns, contact:
 - Email: contact@hmddevs.org
-- GitHub: [@ichbinheimdall](https://github.com/ichbinheimdall)
+- GitHub: [@umutguden](https://github.com/umutguden)
 - Response Time: 48 hours
 
 ---
