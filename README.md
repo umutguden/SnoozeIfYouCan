@@ -1,6 +1,6 @@
 # Snooze If You Can
 
-> **Archived** — This project is archived pending a stable release of Apple's AlarmKit framework. See [ALARMKIT_LIMITATIONS.md](ALARMKIT_LIMITATIONS.md) for details.
+> **Archived.** This project is archived pending a stable release of Apple's AlarmKit framework. See [ALARMKIT_LIMITATIONS.md](ALARMKIT_LIMITATIONS.md) for details.
 
 [![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
 [![Platform](https://img.shields.io/badge/Platform-iOS%2018.0+-blue.svg)](https://developer.apple.com/ios/)
@@ -95,4 +95,4 @@ MIT. See [LICENSE](LICENSE).
 
 ## Contact
 
-HMD Developments — contact@hmddevs.org
+HMD Developments, contact@hmddevs.org
