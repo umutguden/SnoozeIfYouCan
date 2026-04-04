@@ -1,54 +1,43 @@
-# AlarmKit Limitations & Archive Notice
+# AlarmKit Limitations
 
-## Project Status: ARCHIVED ⚠️
-
-**Snooze If You Can** is currently archived until Apple releases a fully functional version of AlarmKit that allows third-party developers to create alarm experiences comparable to the native iOS Clock app.
+> This project is archived pending a stable release of AlarmKit. See [PROJECT_STATUS.md](PROJECT_STATUS.md) for overall project status.
 
 ## Background
 
-At WWDC 2024, Apple announced **AlarmKit** - a new framework designed to let developers create alarm experiences that integrate with the iOS system, similar to the native Clock app. This was exciting news for apps like Snooze If You Can that aim to provide custom alarm functionality.
+Apple announced AlarmKit at WWDC 2024 as a framework for third-party alarm apps to integrate with the iOS system. As of January 2026, it remains unsuitable for production use.
 
-## Current AlarmKit Issues (January 2026)
+## Issues (January 2026)
 
-Despite being announced for iOS 18, AlarmKit has significant limitations that prevent it from being production-ready:
+### Entitlement Restrictions
 
-### 1. Entitlement Restrictions
-- AlarmKit requires special entitlements that are not automatically granted
-- Many developers report entitlement requests being denied
-- Unclear criteria for who gets access to the framework
+AlarmKit requires special entitlements that are not automatically granted. Many developers report requests being denied. The criteria for approval are unclear.
 
-### 2. Simulator Limitations
-- AlarmKit is completely non-functional in the iOS Simulator
-- Testing requires physical devices only
-- Makes development and debugging extremely difficult
+### No Simulator Support
 
-### 3. Incomplete Implementation
-- Framework appears to be in beta state despite iOS 18 being released
-- Missing APIs and incomplete documentation
-- Unpredictable behavior across different iOS versions
+The framework is completely non-functional in the iOS Simulator. Testing requires a physical device, which makes development and debugging significantly harder.
 
-### 4. System Integration Issues
-- Alarms created with AlarmKit don't appear in the native Clock app
-- Users can't manage alarms from both apps simultaneously
-- Confusing user experience with duplicate alarm systems
+### Incomplete Implementation
 
-### 5. Live Activities Limitations
-- Integration with Dynamic Island is incomplete
-- Lock Screen widgets don't work as documented
-- Live Activities for alarm countdown are unreliable
+The framework appears to be in a beta state despite shipping with iOS 18. Documentation is sparse, APIs are missing, and behaviour varies across iOS versions.
 
-## Our Implementation Strategy
+### Poor System Integration
 
-Given these limitations, we implemented a **hybrid fallback approach**:
+Alarms created with AlarmKit do not appear in the native Clock app. Users cannot manage alarms from both apps, resulting in a confusing experience. Dynamic Island and Lock Screen widget integration is unreliable.
 
-### Primary: AlarmKit (iOS 18+ with entitlements)
+## Implementation Strategy
+
+This project uses a hybrid fallback approach:
+
+**Primary** (iOS 18+ with entitlements):
+
 ```swift
 if #available(iOS 18.0, *), AlarmKitService.shared.isAuthorized {
     try await AlarmKitService.shared.scheduleAlarm(alarm)
 }
 ```
 
-### Fallback: UserNotifications + Critical Alerts
+**Fallback** (UserNotifications with Critical Alerts):
+
 ```swift
 else {
     NotificationManager.shared.scheduleAlarm(alarm)
@@ -56,129 +45,33 @@ else {
 }
 ```
 
-### In-App UI
-- Full-screen `ActiveAlarmView` when alarm fires
-- Handles snooze and dismiss actions
-- Works regardless of AlarmKit availability
+An in-app full-screen `ActiveAlarmView` handles snooze and dismiss actions regardless of which delivery method is used.
 
-## Why This Isn't Sufficient
+## Why the Fallback Is Insufficient
 
-While the fallback approach works, it has critical limitations:
-
-1. **Not a True Alarm**
-   - Notifications can be cleared by the user
-   - System can delay or drop notifications under resource pressure
-   - No guaranteed alarm behavior like native Clock app
-
-2. **Background Limitations**
-   - App can be terminated by iOS
-   - Background refresh is not guaranteed
-   - Cannot wake device from deep sleep reliably
-
-3. **User Trust**
-   - Users (rightfully) don't trust third-party apps for critical wake-up alarms
-   - Native Clock app has special system privileges we can't access
-   - Missing the "it just works" reliability of Apple's implementation
-
-4. **Critical Alerts Abuse**
-   - Critical Alerts are designed for emergencies (health, safety, security)
-   - Using them for alarm apps may violate App Store guidelines
-   - Apple may reject apps that misuse this permission
-
-## What We Need from Apple
-
-For this project to be un-archived and production-ready, we need:
-
-1. ✅ **Public AlarmKit Entitlements**
-   - Clear process for requesting entitlements
-   - Transparent approval criteria
-   - Reasonable approval timeline
-
-2. ✅ **Full Simulator Support**
-   - AlarmKit working in iOS Simulator
-   - Proper testing and debugging capabilities
-   - Consistent behavior with physical devices
-
-3. ✅ **Complete API Surface**
-   - All promised APIs implemented
-   - Comprehensive documentation
-   - Sample code and best practices
-
-4. ✅ **System Integration**
-   - Option for alarms to appear in native Clock app
-   - Unified alarm management experience
-   - Clear communication to users about alarm sources
-
-5. ✅ **Reliability Guarantees**
-   - Documentation of guaranteed alarm delivery
-   - SLA for alarm firing accuracy
-   - Fallback mechanisms for system failures
-
-## Current Alternatives
-
-For users who need a reliable alarm:
-
-1. **Use the native Clock app** - It's the only truly reliable option
-2. **Use this app as a secondary alarm** - Not as your primary wake-up method
-3. **Wait for Apple to fix AlarmKit** - Follow this repo for updates
-
-## When Will This Be Un-archived?
-
-We'll un-archive and continue development when:
-
-- Apple releases a stable AlarmKit with public entitlements
-- We can reliably test in both Simulator and device
-- The framework provides guarantees comparable to native alarms
-- App Store guidelines clearly allow alarm apps with proper permissions
+- Notifications can be cleared by the user or delayed by the system.
+- Background execution is not guaranteed; iOS may terminate the app.
+- The device cannot be woken from deep sleep reliably.
+- Users rightly expect the same reliability as the native Clock app, which has special system privileges.
 
 ## Alternatives Considered
 
-### Option 1: Ship Without AlarmKit
-**Status**: ❌ Rejected  
-**Reason**: Misleading to users; can't guarantee alarm reliability
+| Approach | Outcome |
+|----------|---------|
+| Ship without AlarmKit | Rejected. Cannot guarantee alarm reliability. |
+| Apply for health/safety exception | Not applicable to alarm apps. |
+| Open-source and archive | Chosen. Preserves work and documents the challenges. |
 
-### Option 2: Health & Safety Exception
-**Status**: ❌ Not Applicable  
-**Reason**: Alarm apps don't qualify for Critical Alert exception
+## Advice for Other Developers
 
-### Option 3: Open Source and Archive
-**Status**: ✅ **CHOSEN**  
-**Reason**: Transparent about limitations; preserves work; educates community
+- Be honest with users about what your app can and cannot do.
+- Always test on physical devices; the simulator hides AlarmKit problems.
+- Keep UserNotifications as a fallback.
+- Monitor WWDC and iOS betas for AlarmKit improvements.
+- File feedback with Apple about specific issues.
 
-## For Other Developers
+## Contact
 
-If you're building an alarm app, please be aware:
+Open an issue with the `alarmkit-question` label for questions.
 
-- **Don't promise what you can't deliver** - Be honest about limitations
-- **Test on physical devices** - Simulator won't show AlarmKit issues
-- **Have a backup plan** - UserNotifications as fallback
-- **Monitor WWDC and iOS releases** - Watch for AlarmKit improvements
-- **Join the feedback loop** - File radars with Apple about AlarmKit issues
-
-## Contributing
-
-Despite being archived, we welcome contributions that:
-- Improve code quality and documentation
-- Add features that work with current limitations
-- Prepare for future AlarmKit improvements
-- Help other developers understand the challenges
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-## Stay Updated
-
-- **GitHub Issues**: We track AlarmKit updates in issues
-- **WWDC**: Watch for AlarmKit announcements
-- **iOS Betas**: Test new iOS versions for improvements
-- **Twitter/X**: Follow iOS developer community discussions
-
-## Questions?
-
-Open an issue with the `alarmkit-question` label and we'll help as we can.
-
----
-
-**Last Updated**: January 28, 2026  
-**iOS Version**: 18.2  
-**AlarmKit Status**: Beta/Unstable  
-**Project Status**: Archived
+**Last updated**: January 28, 2026

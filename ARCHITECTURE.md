@@ -556,9 +556,9 @@ None currently (privacy-focused)
 ### Logging
 
 ```swift
-print("✅ Success message")
-print("⚠️ Warning message")
-print("❌ Error message")
+print("[SUCCESS] message")
+print("[WARNING] message")
+print("[ERROR] message")
 ```
 
 Production: Consider OSLog for structured logging
